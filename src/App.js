@@ -1,25 +1,31 @@
 import React from 'react';
+import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
+import Header from '../src/components/Header/Header';
+import Home from '../src/components/Home/Home';
+import DestinationSearch from './components/DestinationSearch/DestinationSearch';
 
-import './App.css';
 
 function App() {
   return (
     <Router>
-      
+      <Header></Header>
       <Switch>
-        <Route path="/">
-          <About />
+        <Route path="/Home">
+          <Home></Home>
         </Route>
-        <Route path="/users">
-          <Users />
+        <Route exact path = '/'>
+        <Home></Home>
+           </Route>
+        <Route path="/destination">
+          <DestinationSearch></DestinationSearch>
         </Route>
-        <Route path="/">
+        <Route path="/login">
           <Home />
         </Route>
       </Switch>
