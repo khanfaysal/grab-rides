@@ -8,7 +8,7 @@ const VehicleCard = (props) => {
     
         <Col className = 'mt-5 ' xs={6} md={3}>
             <Card className = 'text-center'  style={{ width: '18rem'}}>
-                <Card.Img variant="top" ClassName="img-responsive" src={image} fluid/>
+                <Card.Img variant="top"  src={image} fluid/>
                 <Card.Body>
                     <Card.Title>{transport}</Card.Title>
                 </Card.Body>
