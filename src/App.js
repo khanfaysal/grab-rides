@@ -9,6 +9,7 @@ import {
 import Header from '../src/components/Header/Header';
 import Home from '../src/components/Home/Home';
 import DestinationSearch from './components/DestinationSearch/DestinationSearch';
+import Login from './components/Login/Login';
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
           <DestinationSearch></DestinationSearch>
         </Route>
         <Route path="/login">
-          <Home />
+          <Login></Login>
         </Route>
       </Switch>
   </Router>

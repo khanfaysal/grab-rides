@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar,Nav } from 'react-bootstrap';
+import { Navbar,Nav, Button } from 'react-bootstrap';
 // import logo from '../logo/Grav Rides.png';
 
 const Header = () => {
@@ -12,7 +12,8 @@ const Header = () => {
             <Nav.Link href="#destination">Destination</Nav.Link>
             <Nav.Link href="#blog">Blog</Nav.Link>
             <Nav.Link href="#contact">Contact</Nav.Link>
-            {/* <button>Login</button> */}
+            <Nav.Link href="#login"><Button variant="danger">Login</Button>{' '}</Nav.Link>
+          
             </Nav>
         </Navbar>
         </>
