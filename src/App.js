@@ -10,6 +10,7 @@ import Header from '../src/components/Header/Header';
 import Home from '../src/components/Home/Home';
 import DestinationSearch from './components/DestinationSearch/DestinationSearch';
 import Login from './components/Login/Login';
+import DestinationVehicle from './components/DestinationVehicle/DestinationVehicle.js';
 
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route path="/login">
           <Login></Login>
+        </Route>
+        <Route path="/destinationvehicle">
+          <DestinationVehicle></DestinationVehicle>
         </Route>
       </Switch>
   </Router>

@@ -10,12 +10,12 @@ const Home = () => {
     useEffect(() => {
         setCardDetails(vehicleDatabase);
 
-    })
+    },[])
     return (  
             <Container>
               <Row >
                  {
-                    cardDetails.map((card, key) => <VehicleCard card ={card}></VehicleCard>)
+                    cardDetails.map((card, key) => <VehicleCard card ={card} key={key}></VehicleCard>)
                  }
               </Row>
           </Container>
