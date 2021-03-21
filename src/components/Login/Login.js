@@ -132,7 +132,7 @@ const Login = () => {
         <div className='text-center mt-5'>
             <h3>{newUser ? 'Create an account' : 'Login'}</h3>
             <p className='text-danger'>{user.error}</p>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className = "border border-warning">
                 {newUser && (
                     <input
                         type='text' name='name' onBlur={handleBlur}
