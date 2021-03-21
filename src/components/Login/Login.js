@@ -160,8 +160,8 @@ const Login = () => {
                             type='checkbox'
                             className='form-check-input'
                             id='exampleCheck1'/>
-                        <label className='form-check-label' for='exampleCheck1'>
-                            Check Me
+                        <label className='form-check-label text-warning ' for='exampleCheck1' style = {{marginLeft: '200px'}}>
+                            Check it
                         </label>
                     </div>
                 )}
