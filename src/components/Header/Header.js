@@ -1,6 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
+import './Header';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+
 
 const Header = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
@@ -8,7 +12,7 @@ const Header = () => {
         <div className = 'container'>
             <nav className='navbar navbar-light'>
                 <div className='container-fluid'>
-                    <Link to='/' className='navbar-brand'>
+                    <Link to='/' className='navbar-brand fw-bold'>
                         Grab Rides
                     </Link>
                     <div className='d-flex'>

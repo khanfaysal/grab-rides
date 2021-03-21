@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import map from '../../assets/Map.png';
 import vehicles from '../../Data/Data.json';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import './Destination.css';
 
 const Destination = () => {
     const [location, setLocation] = useState({
@@ -32,7 +34,7 @@ const Destination = () => {
     const { id } = useParams();
     const [transport, setTransportInfo] = useState({});
     useEffect(() => {
-        const info = vehicles.filter((type) => id == type.id);
+        const info = vehicles.filter((type) => id === type.id);
         setTransportInfo(info[0]);
         console.log(info[0]);
     }, [id]);
@@ -48,39 +50,30 @@ const Destination = () => {
                                 <label htmlFor='exampleInputEmail1'>
                                     Pick From
                                 </label>
-                                <input
-                                    type='text'
-                                    className='form-control'
-                                    placeholder='From'
-                                    name='from'
-                                    onBlur={handleBlur}
+                                <input type='text'
+                                    className='form-control' placeholder='From'
+                                    name='from' onBlur={handleBlur}
                                 />
                             </div>
                             <div className='form-group'>
                                 <label htmlFor='exampleInputPassword1'>
                                     Pick To
                                 </label>
-                                <input
-                                    type='text'
-                                    className='form-control'
-                                    placeholder='To'
-                                    name='to'
-                                    onBlur={handleBlur}
+                                <input type='text'
+                                    className='form-control' placeholder='To'
+                                    name='to' onBlur={handleBlur}
                                 />
                             </div>
                             <div className='form-group'>
                                 <label htmlFor='exampleInputPassword1'>
                                     Date
                                 </label>
-                                <input
-                                    type='date'
-                                    className='form-control'
-                                    placeholder='To'
-                                    name='date'
-                                    onBlur={handleBlur}
+                                <input type='date'
+                                    className='form-control' placeholder='To'
+                                    name='date' onBlur={handleBlur}
                                 />
                             </div>
-                            <button onClick={searchHandler}>Search</button>
+                            <button onClick={searchHandler} className = 'btn btn-warning'>Search</button>
                         </form>
                     ) : (
                         <div>
@@ -117,8 +110,10 @@ const Destination = () => {
                         </div>
                     )}
                 </div>
+
                 <div className='col'>
-                    <img src={map} alt='Google Map' />
+                <iframe title="Bus station map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.677637308184!2d90.4112999143479!3d23.723203195732996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b85639be9913%3A0xd40ae6820dc9edb4!2sBRTC%20Bus%20Counter!5e0!3m2!1sen!2sbd!4v1616191951814!5m2!1sen!2sbd"  width="700" height="500" allowFullscreen = 'true' border = '0'></iframe>
+            
                 </div>
             </div>
         </div>

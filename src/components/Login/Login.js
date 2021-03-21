@@ -100,6 +100,8 @@ const Login = () => {
                     newUser.error = '';
                     newUser.successful = true;
                     setUser(newUser);
+                    setLoggedInUser(newUser);
+                    history.replace(from);
                     console.log(response.user);
                 })
                 .catch((error) => {
@@ -133,37 +135,25 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
                 {newUser && (
                     <input
-                        type='text'
-                        name='name'
-                        onBlur={handleBlur}
-                        placeholder='Name'
-                        required
+                        type='text' name='name' onBlur={handleBlur}
+                        placeholder='Name' required
                     />
                 )}
                 <br />
                 <input
-                    type='email'
-                    name='email'
-                    onBlur={handleBlur}
-                    placeholder='Enter Email'
-                    required
+                    type='email' name='email' onBlur={handleBlur}placeholder='Enter Email'required
                 />
                 <br />
                 <input
-                    type='password'
-                    name='password'
-                    onBlur={handleBlur}
-                    placeholder='Password'
-                    required
+                    type='password' name='password' onBlur={handleBlur}
+                    placeholder='Password' required
                 />
                 <br />
                 {newUser && (
                     <input
                         type='password'
-                        name='confirmPassword'
-                        onBlur={handleBlur}
-                        placeholder='Confirm Password'
-                        required
+                        name='confirmPassword' onBlur={handleBlur}
+                        placeholder='Confirm Password' required
                     />
                 )}
                 <br />
