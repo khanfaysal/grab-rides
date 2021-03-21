@@ -95,14 +95,14 @@ const Login = () => {
             firebase
                 .auth()
                 .signInWithEmailAndPassword(user.email, user.password)
-                .then((response) => {
-                    const newUser = { ...user };
+                .then((result) => {
+                    const newUser = {...result.user };
                     newUser.error = '';
                     newUser.successful = true;
                     setUser(newUser);
                     setLoggedInUser(newUser);
                     history.replace(from);
-                    console.log(response.user);
+                    console.log(result.user);
                 })
                 .catch((error) => {
                     const newUser = { ...user };
@@ -141,20 +141,17 @@ const Login = () => {
                 )}
                 <br />
                 <input
-                    type='email' name='email' onBlur={handleBlur}placeholder='Enter Email'required
-                />
+                    type='email' name='email' onBlur={handleBlur}placeholder='Enter Email' required/>
                 <br />
                 <input
                     type='password' name='password' onBlur={handleBlur}
-                    placeholder='Password' required
-                />
+                    placeholder='Password' required/>
                 <br />
                 {newUser && (
                     <input
                         type='password'
                         name='confirmPassword' onBlur={handleBlur}
-                        placeholder='Confirm Password' required
-                    />
+                        placeholder='Confirm Password' required />
                 )}
                 <br />
                 {!newUser && (
@@ -162,8 +159,7 @@ const Login = () => {
                         <input
                             type='checkbox'
                             className='form-check-input'
-                            id='exampleCheck1'
-                        />
+                            id='exampleCheck1'/>
                         <label className='form-check-label' for='exampleCheck1'>
                             Check Me
                         </label>
@@ -181,6 +177,7 @@ const Login = () => {
                 <span
                     className='text-danger'
                     onClick={() => setNewUser(!newUser)}
+                    style = {{cursor: 'pointer' }}
                 >
                     {newUser ? 'Login' : 'Create an account'}
                 </span>{' '}
@@ -199,5 +196,4 @@ const Login = () => {
         </div>
     );
 };
-
 export default Login;

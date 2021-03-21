@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+
 import { Link } from 'react-router-dom';
-import vehicles from '../../Data/Data.json';
 import './Vehicle.css'
 
 
 const Vehicles = (props) => {
     const { id, transport, image } = props.vehicle;
-
     return (
         <div className='col-lg-3 card-area shadow p-3 mb-5 bg-body rounded'>
             <div className='card text-center bg-dark'>
@@ -22,5 +20,4 @@ const Vehicles = (props) => {
         </div>
     );
 };
-
 export default Vehicles;

@@ -34,7 +34,7 @@ const Destination = () => {
     const { id } = useParams();
     const [transport, setTransportInfo] = useState({});
     useEffect(() => {
-        const info = vehicles.filter((type) => id === type.id);
+        const info = vehicles.filter((type) => id == type.id);
         setTransportInfo(info[0]);
         console.log(info[0]);
     }, [id]);
@@ -84,21 +84,28 @@ const Destination = () => {
                             </div>
                             <div className='card mb-3'>
                                 <div className='row no-gutters'>
-                                    <div className='col-md-4'>
+                                    <div className='col-lg-3'>
                                         <img
                                             className='w-100'
                                             src={transport.image}
                                             alt='...'
                                         />
                                     </div>
-                                    <div className='col-md-4'>
+                                    <div className='col-lg-3'>
                                         <div className='card-body'>
                                             <h5 className='card-title'>
                                                 {transport.transport}
                                             </h5>
                                         </div>
                                     </div>
-                                    <div className='col-md-4'>
+                                    <div className='col-lg-3'>
+                                        <div className='card-body'>
+                                            <h5 className='card-title'>
+                                                {transport.capacity}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <div className='col-lg-3'>
                                         <div className='card-body'>
                                             <h5 className='card-title'>
                                                 ${transport.rent}
@@ -119,5 +126,4 @@ const Destination = () => {
         </div>
     );
 };
-
 export default Destination;

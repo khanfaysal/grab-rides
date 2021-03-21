@@ -3,11 +3,10 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 import './Header';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-
-
+// import { faUserFriends } from '@fortawesome/free-brands-svg-icons';
 const Header = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    console.log(loggedInUser)
     return (
         <div className = 'container'>
             <nav className='navbar navbar-light'>
@@ -31,6 +30,15 @@ const Header = () => {
                         <Link to='/login' className='nav-link active'>
                             <button class="btn btn-warning">Login</button>
                         </Link>
+                        {loggedInUser.displayName ? (
+                                    <h5 className='nav-link active text-white text-center text-dark'>
+                                        {loggedInUser.displayName}
+                                    </h5>
+                            ) : (
+                                    <Link to='/login' className='nav-link active text-white text-center'>
+                                        Login
+                                    </Link>
+                            )}
                         <h5>{loggedInUser.name}</h5>
                     </div>
                 </div>
@@ -38,5 +46,4 @@ const Header = () => {
         </div>
     );
 };
-
 export default Header;
