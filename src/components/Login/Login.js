@@ -1,135 +1,213 @@
-
-import firebase from "firebase/app";
-import "firebase/auth";
+import React, { useContext, useState } from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import firebaseConfig from './firebase.config';
+import { UserContext } from '../../App';
+import { useHistory, useLocation } from 'react-router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import './Login.css';
 
-// import { useContext, useState } from 'react';
- import React, {useState} from 'react';
+const Login = () => {
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const history = useHistory();
+    const location = useLocation();
+    const { from } = location.state || { from: { pathname: '/' } };
 
-// import { UserContext } from "../../App.js";
-// import { useHistory, useLocation } from "react-router";
-import GoogleAuthentication from '../GoogleAuthentication/GoogleAuthentication';
-
-
-if( firebase.apps.length === 0 ){
-  firebase.initializeApp(firebaseConfig);
-}
-
-function Login() {
-  const [newUser, setNewUser] = useState(false)
-  const [user , setUser] = useState({
-    isSignIn: false,
-    name : '',
-    email: '',
-    photo: '',
-    password: '',
-    error: '',
-    success: '',
-  });
-    // //   context api use part
-    // const [logInUser, setLogInUser] = useContext(UserContext);
-    // const history = useHistory();
-    // const location = useLocation();
-    // let { from } = location.state || { from: { pathname: "/" } };
-   // total form controlling function 
-   const handleSubmit = (e) => {
-    if(newUser && user.email && user.password){
-      firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
-      .then((res) => {
-        const newUserInfo = {...user};
-        newUserInfo.error = '';
-        newUserInfo.success = true;
-        setUser(newUserInfo);
-        updateUserName(user.name);
-        
-      })
-      .catch((error) => {
-        const newUserInfo = {...user};
-        newUserInfo.error = error.message;
-        newUserInfo.success = false;
-        setUser(newUserInfo);
-      });
+    if (firebase.apps.length === 0) {
+        firebase.initializeApp(firebaseConfig);
     }
-    if(!newUser && user.email && user.password){
-      firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-      .then((res) => {
-        const newUserInfo = {...user};
-        newUserInfo.error = '';
-        newUserInfo.success = true;
-        setUser(newUserInfo);
-        // setLogInUser(newUserInfo);
-        // history.replace(from);
-        console.log('sign in user info',res.user);
-      })
-        .catch((error) => {
-          const newUserInfo = {...user};
-        // newUserInfo[error] = e.target.value;
-        newUserInfo.error = error.message;
-        newUserInfo.success = false;
-        setUser(newUserInfo);
-        });
-    }
-    e.preventDefault();
-  }
-  // update user name code part
-  const updateUserName = name => {
-    const user = firebase.auth().currentUser;
+
+    // google sign in handle
+    const handleGoogleSignIn = () => {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase
+            .auth()
+            .signInWithPopup(provider)
+            .then((result) => {
+                var credential = result.credential;
+                var token = credential.accessToken;
+                const { displayName, email } = result.user;
+                const signedInUser = {
+                    name: displayName,
+                    email : email
+                };
+                setLoggedInUser(signedInUser);
+                history.replace(from);
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
+    };
+
+    // log in using email and password
+    const [newUser, setNewUser] = useState(true);
+
+    const [user, setUser] = useState({
+        isSignedIn: false,
+        name: '',
+        email: '',
+        password: '',
+        error: '',
+        successful: false,
+    });
+
+    const handleBlur = (event) => {
+        let isFieldValid = true;
+        console.log(event.target.name, event.target.value);
+        if (event.target.name === 'email') {
+            isFieldValid = /\S+@\S+\.\S+/.test(event.target.value);
+        }
+        if (event.target.name === 'password') {
+            isFieldValid = /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]{8,}$/.test(
+                event.target.value
+            );
+        }
+        if (isFieldValid) {
+            const newUser = { ...user };
+            newUser[event.target.name] = event.target.value;
+            setUser(newUser);
+        }
+    };
+
+    const handleSubmit = (event) => {
+        console.log(user);
+        if (newUser && user.email && user.password) {
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(user.email, user.password)
+                .then((response) => {
+                    const newUser = { ...user };
+                    newUser.error = '';
+                    newUser.successful = true;
+                    setUser(newUser);
+                    updateUserName(user.name);
+                })
+                .catch((error) => {
+                    const newUser = { ...user };
+                    newUser.error = error.message;
+                    newUser.successful = false;
+                    setUser(newUser);
+                });
+        }
+
+        if (!newUser && user.email && user.password) {
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(user.email, user.password)
+                .then((response) => {
+                    const newUser = { ...user };
+                    newUser.error = '';
+                    newUser.successful = true;
+                    setUser(newUser);
+                    console.log(response.user);
+                })
+                .catch((error) => {
+                    const newUser = { ...user };
+                    newUser.error = error.message;
+                    newUser.successful = false;
+                    setUser(newUser);
+                });
+        }
+        event.preventDefault();
+    };
+
+    const updateUserName = (name) => {
+        const user = firebase.auth().currentUser;
 
         user.updateProfile({
-          displayName: name
-        }).then(function() {
-          console.log('user name update successfully');
-        }).catch(function(error) {
-          console.log(error);
-        });
-  }
-  // input change function
-  const handleBlur = (e) => {
-    let isFieldValid = true;
-    if(e.target.name === 'email'){
-      isFieldValid = /\S+@\S+\.\S+/.test(e.target.value);
-    }
-    if(e.target.name === 'password'){
-      const isPasswordValid = e.target.value.length > 6;
-      const passwordHasNumber = /\d{1}/.test(e.target.value);
-      const isUpperCaseLetter = (/[A-Z]/.test(e.target.value));
-      isFieldValid = isPasswordValid && passwordHasNumber && isUpperCaseLetter;
-    }
-    if(isFieldValid){
-      const newUserInfo = {...user};
-      newUserInfo[e.target.name] = e.target.value;
-      setUser(newUserInfo);
-      
-    }
-  }
+            displayName: name,
+        })
+            .then(function () {
+                console.log('username updated successfully.');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
 
-  // google authentication code part
+    return (
+        <div className='text-center mt-5'>
+            <h3>{newUser ? 'Create an account' : 'Login'}</h3>
+            <p className='text-danger'>{user.error}</p>
+            <form onSubmit={handleSubmit}>
+                {newUser && (
+                    <input
+                        type='text'
+                        name='name'
+                        onBlur={handleBlur}
+                        placeholder='Name'
+                        required
+                    />
+                )}
+                <br />
+                <input
+                    type='email'
+                    name='email'
+                    onBlur={handleBlur}
+                    placeholder='Enter Email'
+                    required
+                />
+                <br />
+                <input
+                    type='password'
+                    name='password'
+                    onBlur={handleBlur}
+                    placeholder='Password'
+                    required
+                />
+                <br />
+                {newUser && (
+                    <input
+                        type='password'
+                        name='confirmPassword'
+                        onBlur={handleBlur}
+                        placeholder='Confirm Password'
+                        required
+                    />
+                )}
+                <br />
+                {!newUser && (
+                    <div className='form-group form-check'>
+                        <input
+                            type='checkbox'
+                            className='form-check-input'
+                            id='exampleCheck1'
+                        />
+                        <label className='form-check-label' for='exampleCheck1'>
+                            Check Me
+                        </label>
+                    </div>
+                )}
+                <br />
+                <input
+                    type='submit'
+                    value={newUser ? 'Create an account' : 'Login'}
+                />
+            </form>
+            <p>
+                {newUser
+                    ? 'Already have an account?': "Don't have an account?"}{' '}
+                <span
+                    className='text-danger'
+                    onClick={() => setNewUser(!newUser)}
+                >
+                    {newUser ? 'Login' : 'Create an account'}
+                </span>{' '}
+            </p>
 
- 
-  return (
-    <div>
-      <div style ={{textAlign: "center"}}>
-     <h1>User Email And Password Authentication</h1>
-     <input type="checkbox" onChange = {() => setNewUser(!newUser)} name="newUser" id=""/>
-     <label htmlFor="newUser">For New User SignUp</label><br/><br/>
-     <form onSubmit = {handleSubmit}>
-       {newUser && <input type="text" onBlur = {handleBlur} name="name" id="" placeholder = "Your name" required/>}&nbsp;&nbsp;
-       <input type="text" onBlur = {handleBlur} name="email" id="" placeholder ="Type your email" required/> &nbsp;&nbsp;
-       <input type="password" onBlur = {handleBlur} name="password" id="" placeholder ="Type your password" required/> <br/><br/>
-       <input type="submit" value= {newUser ? "Sign Up":"Sign In"}/>
-     </form>
-     <p style = {{color: 'red'}}>{user.error}</p>
-     {
-       user.success && <p style = {{color: 'green'}}>user {newUser ? 'created':'Log In'} successfully</p>
-     }
-    </div>
-    <div>
-      <GoogleAuthentication></GoogleAuthentication>
-    </div>
-    </div>
-    
-  );
-}
-
+            {user.successful && (
+                <p className='text-success'>
+                    Account {newUser ? 'created' : 'logged in'} successfully.
+                </p>
+            )}
+            <p className = 'or-style'>Or</p>
+                <div className = 'googleButton'>
+                <button  onClick={handleGoogleSignIn}>
+                <FontAwesomeIcon className = 'google-icon' icon={faGoogle} />&nbsp;&nbsp;Continue with Google</button>
+                </div>
+        </div>
+    );
+};
 
 export default Login;

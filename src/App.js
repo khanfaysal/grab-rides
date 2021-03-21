@@ -1,41 +1,45 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import Header from '../src/components/Header/Header';
-import Home from '../src/components/Home/Home';
-import DestinationSearch from './components/DestinationSearch/DestinationSearch';
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Header from './components/Header/Header';
+import Home from './components/Home/Home';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import Destination from './components/Destination/Destination';
+import Blog from './components/Blog/Blog';
+import Contact from './components/Contact/Contact';
 import Login from './components/Login/Login';
-import DestinationVehicle from './components/DestinationVehicle/DestinationVehicle.js';
 
+export const UserContext = createContext();
 
 function App() {
-  return (
-    <Router>
-      <Header></Header>
-      <Switch>
-        <Route path="/Home">
-          <Home></Home>
-        </Route>
-        <Route exact path = '/'>
-        <Home></Home>
-           </Route>
-        <Route path="/destination">
-          <DestinationSearch></DestinationSearch>
-        </Route>
-        <Route path="/login">
-          <Login></Login>
-        </Route>
-        <Route path="/destinationvehicle">
-          <DestinationVehicle></DestinationVehicle>
-        </Route>
-      </Switch>
-  </Router>
-  );
+    const [loggedInUser, setLoggedInUser] = useState({});
+    return (
+        <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
+            <Router>
+                <Header />
+                <Switch>
+                <Route path='/home'>
+                        <Home />
+                    </Route>
+                    <Route exact path='/'>
+                        <Home />
+                    </Route>
+                    <PrivateRoute path='/destination/:id'>
+                        <Destination />
+                    </PrivateRoute>
+                    <Route path='/blog'>
+                        <Blog />
+                    </Route>
+                    <Route path='/contact'>
+                        <Contact />
+                    </Route>
+                    <Route path='/login'>
+                        <Login />
+                    </Route>
+                </Switch>
+            </Router>
+        </UserContext.Provider>
+    );
 }
 
 export default App;

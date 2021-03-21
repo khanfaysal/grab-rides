@@ -1,3 +1,17 @@
+/* custom style */
+
+/* header style */
+.custom-bg {
+    background-image: url('./assets/Bg.png');
+    height: 100vh;
+}
+/* end header style */
+
+/* vehicle style */
+/* end vehicle style */
+
+/* end custom style */
+
 .App {
   text-align: center;
 }

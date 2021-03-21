@@ -1,22 +1,37 @@
-import React from 'react';
-import { Navbar,Nav, Button } from 'react-bootstrap';
-// import logo from '../logo/Grav Rides.png';
+import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { UserContext } from '../../App';
 
 const Header = () => {
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     return (
-        <>
-        <Navbar className = 'container mt-3' variant="light">
-            <Navbar.Brand href="#home" style ={{fontWeight: 'bold'}}>Grab Rides</Navbar.Brand>
-            <Nav className="ml-auto ">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#destination">Destination</Nav.Link>
-            <Nav.Link href="#blog">Blog</Nav.Link>
-            <Nav.Link href="#contact">Contact</Nav.Link>
-            <Nav.Link href="#login"><Button variant="danger">Login</Button>{' '}</Nav.Link>
-          
-            </Nav>
-        </Navbar>
-        </>
+        <div className = 'container'>
+            <nav className='navbar navbar-light'>
+                <div className='container-fluid'>
+                    <Link to='/' className='navbar-brand'>
+                        Grab Rides
+                    </Link>
+                    <div className='d-flex'>
+                        <Link to='/home' className='nav-link active'>
+                            Home
+                        </Link>
+                        <Link to='/destination/1' className='nav-link active'>
+                            Destination
+                        </Link>
+                        <Link to='/blog' className='nav-link active'>
+                            Blog
+                        </Link>
+                        <Link to='/contact' className='nav-link active'>
+                            Contact
+                        </Link>
+                        <Link to='/login' className='nav-link active'>
+                            <button class="btn btn-warning">Login</button>
+                        </Link>
+                        <h5>{loggedInUser.name}</h5>
+                    </div>
+                </div>
+            </nav> 
+        </div>
     );
 };
 

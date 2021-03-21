@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import './Home.css';
-import vehicleDatabase from '../vehicleDatabase/vehicleData.json';
-import VehicleCard from '../VehicleCard/VehicleCard.js';
-import {Container, Row } from 'react-bootstrap';
-
+import vehicles from '../../Data/Data.json';
+import Vehicle from '../Vehicle/Vehicle';
 
 const Home = () => {
-    const [cardDetails , setCardDetails] = useState([]);
+    const [ride, setRide] = useState([]);
     useEffect(() => {
-        setCardDetails(vehicleDatabase);
-
-    },[])
-    return (  
-            <Container>
-              <Row >
-                 {
-                    cardDetails.map((card, key) => <VehicleCard card ={card} key={key}></VehicleCard>)
-                 }
-              </Row>
-          </Container>
+        setRide(vehicles);
+    }, []);
+    return (
+        <div className='custom-bg'>
+            <div className='container my-3'>
+                <div className='row'>
+                    {ride.map((vehicle) => (
+                        <Vehicle key={vehicle.id} vehicle={vehicle}></Vehicle>
+                    ))}
+                </div>
+            </div>
+        </div>
     );
 };
 

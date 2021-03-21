@@ -1,0 +1,41 @@
+input[type=text] {
+    padding: 5px 100px 5px 0px;
+    border: none;
+    border-bottom: 1px solid black;
+    
+  }
+  input[type=email] {
+    padding: 5px 100px 5px 0px;;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  input[type=password] {
+    padding: 5px 100px 5px 0px;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  input[type=submit] {
+    padding: 5px 50px;
+    width: 20%;
+    background-color: orange;
+    border: none;
+  }
+  .googleButton{
+    margin-top: 10px;
+  }
+  .googleButton button{
+    border-radius: 30px;
+    padding: 5px 40px;
+    background: white;
+  }
+  
+  .google-icon{
+      color: orangered;
+  }
+  .or-style::before{
+    content: "--- ";
+  }
+  .or-style::after{
+    content: "--- ";
+  }
+  
